@@ -1,6 +1,7 @@
 package com.mav.assertrest;
 
 import static com.mav.assertrest.Assertions.get;
+import static com.mav.assertrest.Assertions.post;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Nested;
@@ -32,8 +33,7 @@ class AssertionsIntegrationTest {
     void get_with_query_parameter() {
       // act && assert
       new Assertions(testRestTemplate)
-          .assertThat(
-              get("/todos", TestController.TodoDto[].class, 99).withQueryParam("priority", "99"))
+          .assertThat(get("/todos", TestController.TodoDto[].class).withQueryParam("category", "2"))
           .is2xxSuccessful()
           .isOk()
           .hasBody()
@@ -41,7 +41,7 @@ class AssertionsIntegrationTest {
               body ->
                   assertThat(body)
                       .singleElement()
-                      .returns(99, TestController.TodoDto::priority)
+                      .returns(2, TestController.TodoDto::category)
                       .returns("mow the lawn", TestController.TodoDto::title));
     }
 
@@ -60,8 +60,30 @@ class AssertionsIntegrationTest {
           .hasBodySatisfying(
               body ->
                   assertThat(body)
-                      .returns(2, TestController.TodoDto::priority)
+                      .returns(1, TestController.TodoDto::category)
                       .returns("buy flowers", TestController.TodoDto::title));
+    }
+  }
+
+  @Nested
+  class PostTests {
+
+    @Test
+    void post_new_todo() {
+      // act && assert
+      new Assertions(testRestTemplate)
+          .assertThat(
+              post("/todos", TestController.TodoDto.class)
+                  .withBody(new TestController.TodoDto(2, "clean refrigerator")))
+          .is2xxSuccessful()
+          .isCreated()
+          .hasBody()
+          .hasBodySatisfying(
+              body ->
+                  assertThat(body)
+                      .doesNotReturn(null, TestController.TodoDto::id)
+                      .returns(2, TestController.TodoDto::category)
+                      .returns("clean refrigerator", TestController.TodoDto::title));
     }
   }
 }

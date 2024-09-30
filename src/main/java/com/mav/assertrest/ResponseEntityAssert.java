@@ -35,6 +35,11 @@ public class ResponseEntityAssert<T>
     return this;
   }
 
+  public ResponseEntityAssert<T> isCreated() {
+    isSameCodeAs(HttpStatus.CREATED);
+    return this;
+  }
+
   public ResponseEntityAssert<T> isSameCodeAs(final HttpStatusCode statusCode) {
     isNotNull();
     if (!actual.getStatusCode().isSameCodeAs(statusCode)) {
