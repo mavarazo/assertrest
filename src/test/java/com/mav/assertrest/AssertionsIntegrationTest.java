@@ -144,4 +144,27 @@ class AssertionsIntegrationTest {
           .isNotFound();
     }
   }
+
+  @Nested
+  class DeleteTests {
+
+    @Test
+    void delete_todo() {
+      // act && assert
+      new Assertions(testRestTemplate)
+          .assertThat(delete("/todos/{id}", TodoDto.class, "20a45437-65a4-4688-9804-6f96fe5f8dd4"))
+          .is2xxSuccessful()
+          .isOk()
+          .hasNoBody();
+    }
+
+    @Test
+    void delete_todo_not_found() {
+      // act && assert
+      new Assertions(testRestTemplate)
+          .assertThat(delete("/todos/{id}", TodoDto.class, "94a21116-0ad9-4b4e-a3b1-3b8d460e17a8"))
+          .is4xxClientError()
+          .isNotFound();
+    }
+  }
 }

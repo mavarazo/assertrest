@@ -64,6 +64,12 @@ public class TestController {
             Objects.requireNonNullElse(todo.title(), existingTodo.title())));
   }
 
+  @DeleteMapping("/todos/{id}")
+  public ResponseEntity<Void> deleteTodo(@PathVariable final String id) {
+    getTodoById(id);
+    return ResponseEntity.ok().build();
+  }
+
   private TodoDto getTodoById(final String id) {
     return DATA.stream()
         .filter(todo -> todo.id().equals(id))

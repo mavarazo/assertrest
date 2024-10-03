@@ -13,6 +13,11 @@ public class Assertions {
 
   private final TestRestTemplate testRestTemplate;
 
+  public static <T> RequestBuilder<T> delete(
+      final String url, final Class<T> responseType, final Object... urlVariables) {
+    return new RequestBuilder<>(url, HttpMethod.DELETE, responseType, urlVariables);
+  }
+
   public static <T> RequestBuilder<T> get(
       final String url, final Class<T> responseType, final Object... urlVariables) {
     return new RequestBuilder<>(url, HttpMethod.GET, responseType, urlVariables);
