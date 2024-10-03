@@ -1,5 +1,7 @@
 # assertrest
 
+[![build](https://github.com/mavarazo/assertrest/actions/workflows/build.yml/badge.svg)](https://github.com/mavarazo/assertrest/actions/workflows/build.yml)
+
 `assertrest` is a library to improve test code readability when writing tests with `TestRestTemplate`.
 
 ## How to install
