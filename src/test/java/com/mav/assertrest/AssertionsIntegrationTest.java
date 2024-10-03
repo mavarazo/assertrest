@@ -19,6 +19,19 @@ class AssertionsIntegrationTest {
   @Autowired private TestRestTemplate testRestTemplate;
 
   @Nested
+  class InfoTests {
+
+    @Test
+    void get_info() {
+      // act && assert
+      new Assertions(testRestTemplate)
+          .assertThat(get("/info", String.class))
+          .is5xxServerError()
+          .isInternalServerError();
+    }
+  }
+
+  @Nested
   class GetTests {
 
     @Test

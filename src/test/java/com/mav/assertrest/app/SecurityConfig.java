@@ -17,15 +17,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+  private static final String[] WHITE_LIST_URL = {"/error", "/info", "/todos"};
+
   @Bean
   public SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
+    return httpSecurity
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
-            c -> c.requestMatchers("/todos").permitAll().anyRequest().authenticated())
-        .httpBasic(Customizer.withDefaults());
-
-    return httpSecurity.build();
+            c -> c.requestMatchers(WHITE_LIST_URL).permitAll().anyRequest().authenticated())
+        .httpBasic(Customizer.withDefaults())
+        .build();
   }
 
   @Bean

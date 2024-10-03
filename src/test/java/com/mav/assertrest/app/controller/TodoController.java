@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class TestController {
+public class TodoController {
 
   private static final List<TodoDto> DATA;
 

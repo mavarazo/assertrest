@@ -63,6 +63,19 @@ public class ResponseEntityAssert<T>
     return this;
   }
 
+  public ResponseEntityAssert<T> is5xxServerError() {
+    isNotNull();
+    if (!actual.getStatusCode().is5xxServerError()) {
+      failWithMessage(FAIL_MSG_STATUS, "5xx", actual.getStatusCode());
+    }
+    return this;
+  }
+
+  public ResponseEntityAssert<T> isInternalServerError() {
+    isSameCodeAs(HttpStatus.INTERNAL_SERVER_ERROR);
+    return this;
+  }
+
   public ResponseEntityAssert<T> isSameCodeAs(final HttpStatusCode statusCode) {
     isNotNull();
     if (!actual.getStatusCode().isSameCodeAs(statusCode)) {
