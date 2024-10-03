@@ -40,4 +40,5 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-security")
 }
