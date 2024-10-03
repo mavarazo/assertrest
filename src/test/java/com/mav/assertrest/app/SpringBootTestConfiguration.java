@@ -1,4 +1,4 @@
-package com.mav.assertrest;
+package com.mav.assertrest.app;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

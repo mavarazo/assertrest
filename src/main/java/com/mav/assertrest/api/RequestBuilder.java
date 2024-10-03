@@ -3,14 +3,15 @@ package com.mav.assertrest.api;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 
-public class Request<T> extends AbstractRequest<Request<T>, T> implements Exchange<T> {
+public class RequestBuilder<T> extends AbstractRequest<RequestBuilder<T>, T>
+    implements Exchange<T> {
 
-  public Request(
+  public RequestBuilder(
       final String url,
       final HttpMethod httpMethod,
       final Class<T> responseType,
       final Object[] urlVariables) {
-    super(Request.class, url, httpMethod, responseType, urlVariables);
+    super(RequestBuilder.class, url, httpMethod, responseType, urlVariables);
   }
 
   @Override

@@ -40,6 +40,29 @@ public class ResponseEntityAssert<T>
     return this;
   }
 
+  public ResponseEntityAssert<T> is4xxClientError() {
+    isNotNull();
+    if (!actual.getStatusCode().is4xxClientError()) {
+      failWithMessage(FAIL_MSG_STATUS, "4xx", actual.getStatusCode());
+    }
+    return this;
+  }
+
+  public ResponseEntityAssert<T> isBadRequest() {
+    isSameCodeAs(HttpStatus.BAD_REQUEST);
+    return this;
+  }
+
+  public ResponseEntityAssert<T> isNotFound() {
+    isSameCodeAs(HttpStatus.NOT_FOUND);
+    return this;
+  }
+
+  public ResponseEntityAssert<T> isUnprocessableEntity() {
+    isSameCodeAs(HttpStatus.UNPROCESSABLE_ENTITY);
+    return this;
+  }
+
   public ResponseEntityAssert<T> isSameCodeAs(final HttpStatusCode statusCode) {
     isNotNull();
     if (!actual.getStatusCode().isSameCodeAs(statusCode)) {

@@ -1,9 +1,9 @@
 package com.mav.assertrest;
 
 import com.mav.assertrest.api.BodyExchange;
-import com.mav.assertrest.api.BodyRequest;
+import com.mav.assertrest.api.BodyRequestBuilder;
 import com.mav.assertrest.api.Exchange;
-import com.mav.assertrest.api.Request;
+import com.mav.assertrest.api.RequestBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
@@ -13,18 +13,23 @@ public class Assertions {
 
   private final TestRestTemplate testRestTemplate;
 
-  public static <T> Request<T> get(
+  public static <T> RequestBuilder<T> get(
       final String url, final Class<T> responseType, final Object... urlVariables) {
-    return new Request<>(url, HttpMethod.GET, responseType, urlVariables);
+    return new RequestBuilder<>(url, HttpMethod.GET, responseType, urlVariables);
   }
 
-  public static <T, B> BodyRequest<T, B> post(
+  public static <T, B> BodyRequestBuilder<T, B> post(
       final String url, final Class<T> responseType, final Object... urlVariables) {
-    return new BodyRequest<>(url, HttpMethod.POST, responseType, urlVariables);
+    return new BodyRequestBuilder<>(url, HttpMethod.POST, responseType, urlVariables);
+  }
+
+  public static <T, B> BodyRequestBuilder<T, B> put(
+      final String url, final Class<T> responseType, final Object... urlVariables) {
+    return new BodyRequestBuilder<>(url, HttpMethod.PUT, responseType, urlVariables);
   }
 
   public <T> ResponseEntityAssert<T> assertThat(final Exchange<T> exchange) {
-    return new ResponseEntityAssert<>(
+    return ResponseEntityAssert.assertThat(
         testRestTemplate.exchange(
             exchange.getUri(),
             exchange.getHttpMethod(),
@@ -33,7 +38,7 @@ public class Assertions {
   }
 
   public <T, BODY> ResponseEntityAssert<T> assertThat(final BodyExchange<T, BODY> exchange) {
-    return new ResponseEntityAssert<>(
+    return ResponseEntityAssert.assertThat(
         testRestTemplate.exchange(
             exchange.getUri(),
             exchange.getHttpMethod(),

@@ -3,9 +3,11 @@ package com.mav.assertrest.api;
 import static java.util.Objects.nonNull;
 
 import java.net.URI;
+import java.nio.charset.Charset;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,6 +50,36 @@ public abstract class AbstractRequest<SELF extends AbstractRequest<SELF, T>, T> 
       return uriBuilder.build(urlVariables);
     }
     return uriBuilder.build();
+  }
+
+  public SELF withHeader(final String name, final String value) {
+    httpHeaders.add(name, value);
+    return myself;
+  }
+
+  public SELF withBasicAuth(final String username, final String password) {
+    httpHeaders.setBasicAuth(username, password);
+    return myself;
+  }
+
+  public SELF withBasicAuth(final String username, final String password, final Charset charset) {
+    httpHeaders.setBasicAuth(username, password, charset);
+    return myself;
+  }
+
+  public SELF withBearerToken(final String token) {
+    httpHeaders.setBearerAuth(token);
+    return myself;
+  }
+
+  public SELF withContentType(final MediaType mediaType) {
+    httpHeaders.setContentType(mediaType);
+    return myself;
+  }
+
+  public SELF asJson() {
+    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    return myself;
   }
 
   public SELF withQueryParam(final String key, final Object... values) {
