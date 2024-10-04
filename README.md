@@ -14,7 +14,9 @@ testImplementation("com.mav.assertrest:assertrest:x")
 
 ## Example
 
-An integration test with `TestRestTemplate` and the use of awesome [AssertJ](https://assertj.github.io/doc/):
+An integration test
+with [TestRestTemplate](https://docs.spring.io/spring-boot/api/java/org/springframework/boot/test/web/client/TestRestTemplate.html)
+and the use of awesome [AssertJ](https://assertj.github.io/doc/):
 
 ```java
 
