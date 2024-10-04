@@ -26,7 +26,6 @@ class AssertionsIntegrationTest {
       // act && assert
       new Assertions(testRestTemplate)
           .assertThat(get("/info", String.class))
-          .is5xxServerError()
           .isInternalServerError();
     }
   }
@@ -39,9 +38,7 @@ class AssertionsIntegrationTest {
       // act && assert
       new Assertions(testRestTemplate)
           .assertThat(get("/todos", TodoDto[].class))
-          .is2xxSuccessful()
           .isOk()
-          .hasBody()
           .hasBodySatisfying(body -> assertThat(body).hasSize(3));
     }
 
@@ -52,9 +49,7 @@ class AssertionsIntegrationTest {
           .assertThat(
               get("/todos", TodoDto[].class)
                   .withQueryParam("category", "2"))
-          .is2xxSuccessful()
           .isOk()
-          .hasBody()
           .hasBodySatisfying(
               body ->
                   assertThat(body)
@@ -70,9 +65,7 @@ class AssertionsIntegrationTest {
           .assertThat(
               get("/todos/{id}", TodoDto.class, "765e3532-506a-419d-ac7e-4fbc9e5af367")
                   .withBasicAuth("admin", "123"))
-          .is2xxSuccessful()
           .isOk()
-          .hasBody()
           .hasBodySatisfying(
               body ->
                   assertThat(body)
@@ -87,7 +80,6 @@ class AssertionsIntegrationTest {
           .assertThat(
               get("/todos/{id}", TodoDto.class, "138650ef-9a0e-4d64-a422-ea142b6affbb")
                   .withBasicAuth("admin", "123"))
-          .is4xxClientError()
           .isNotFound();
     }
   }
@@ -103,9 +95,7 @@ class AssertionsIntegrationTest {
               post("/todos", TodoDto.class)
                   .withBasicAuth("admin", "123")
                   .withBody(new TodoDto(2, "clean refrigerator")))
-          .is2xxSuccessful()
           .isCreated()
-          .hasBody()
           .hasBodySatisfying(
               body ->
                   assertThat(body)
@@ -123,7 +113,6 @@ class AssertionsIntegrationTest {
                   .withBasicAuth("admin", "123")
                   .asJson()
                   .withBody("clean refrigerator"))
-          .is4xxClientError()
           .isBadRequest();
     }
 
@@ -135,7 +124,6 @@ class AssertionsIntegrationTest {
               post("/todos", TodoDto.class)
                   .withBasicAuth("admin", "123")
                   .withBody(new TodoDto(2, null)))
-          .is4xxClientError()
           .isUnprocessableEntity();
     }
   }
@@ -151,9 +139,7 @@ class AssertionsIntegrationTest {
               put("/todos/{id}", TodoDto.class, "20a45437-65a4-4688-9804-6f96fe5f8dd4")
                   .withBasicAuth("admin", "123")
                   .withBody(new TodoDto(1, "buy 12 eggs")))
-          .is2xxSuccessful()
           .isOk()
-          .hasBody()
           .hasBodySatisfying(
               body ->
                   assertThat(body)
@@ -170,7 +156,6 @@ class AssertionsIntegrationTest {
               put("/todos/{id}", TodoDto.class, "94a21116-0ad9-4b4e-a3b1-3b8d460e17a8")
                   .withBasicAuth("admin", "123")
                   .withBody(new TodoDto(1, "buy 12 eggs")))
-          .is4xxClientError()
           .isNotFound();
     }
   }
@@ -185,7 +170,6 @@ class AssertionsIntegrationTest {
           .assertThat(
               delete("/todos/{id}", TodoDto.class, "20a45437-65a4-4688-9804-6f96fe5f8dd4")
                   .withBasicAuth("admin", "123"))
-          .is2xxSuccessful()
           .isOk()
           .hasNoBody();
     }
@@ -197,7 +181,6 @@ class AssertionsIntegrationTest {
           .assertThat(
               delete("/todos/{id}", TodoDto.class, "94a21116-0ad9-4b4e-a3b1-3b8d460e17a8")
                   .withBasicAuth("admin", "123"))
-          .is4xxClientError()
           .isNotFound();
     }
   }
