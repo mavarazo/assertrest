@@ -3,12 +3,18 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 plugins {
     jacoco
     `java-library`
+    `maven-publish`
     id("org.springframework.boot") version "3.2.0"
     id("org.sonarqube") version "4.4.1.3373"
+    id("pl.allegro.tech.build.axion-release") version "1.18.9"
 }
 
-group = "com.mav"
-version = "0.0.1-SNAPSHOT"
+scmVersion {
+    versionCreator("versionWithBranch")
+}
+
+group = "com.github.mavarazo"
+version = scmVersion.version
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
