@@ -1,4 +1,5 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
+import java.net.URI
 
 plugins {
     jacoco
@@ -13,7 +14,7 @@ scmVersion {
     versionCreator("versionWithBranch")
 }
 
-group = "com.github.mavarazo"
+group = "io.github.mavarazo"
 version = scmVersion.version
 
 java {
@@ -26,6 +27,11 @@ repositories {
 
 tasks.bootJar {
     enabled = false
+}
+
+tasks.jar {
+    enabled = true
+    archiveClassifier.set("")
 }
 
 tasks.withType<Test> {
@@ -44,6 +50,25 @@ sonar {
         property("sonar.projectKey", "mavarazo_assertrest")
         property("sonar.organization", "mavarazo")
         property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_TOKEN")
+            }
+        }
     }
 }
 
