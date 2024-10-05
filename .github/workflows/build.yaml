@@ -1,17 +1,8 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: build
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches-ignore: [ "main" ]
 
 jobs:
   build:
@@ -22,18 +13,18 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Set up JDK 21
+    - name: setup jdk
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
-    - name: Setup Gradle
+    - name: setup gradle
       uses: gradle/actions/setup-gradle@v4
-    - name: Build with Gradle Wrapper
+    - name: build
       run: ./gradlew build
-    - name: Generate test report
+    - name: test reports
       run: ./gradlew jacocoTestReport
-    - name: Analyze with SonarCloud
+    - name: analyze
       run: ./gradlew sonar --info
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
