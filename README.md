@@ -2,6 +2,8 @@
 
 [![build](https://github.com/mavarazo/assertrest/actions/workflows/build.yml/badge.svg)](https://github.com/mavarazo/assertrest/actions/workflows/build.yml)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mavarazo_assertrest&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mavarazo_assertrest)
+
 `assertrest` is a library to improve test code readability when writing tests with `TestRestTemplate`.
 
 ## How to install
