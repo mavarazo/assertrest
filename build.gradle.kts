@@ -1,6 +1,7 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
+    jacoco
     `java-library`
     id("org.springframework.boot") version "3.2.0"
     id("org.sonarqube") version "4.4.1.3373"
@@ -23,6 +24,21 @@ tasks.bootJar {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "mavarazo_assertrest")
+        property("sonar.organization", "mavarazo")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 dependencies {
