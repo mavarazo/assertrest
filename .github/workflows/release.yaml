@@ -25,8 +25,11 @@ jobs:
       - name: release
         run: ./gradlew release
       - name: publish
-        run: ./gradlew publishMavenPublicationToMavenCentralRepository
+        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_TOKEN }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.OSSRH_SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.OSSRH_SIGNING_KEY_ID }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_SIGNING_KEY_PASSWORD }}
