@@ -65,6 +65,22 @@ mavenPublishing {
         description = "Library to improve test code readability when writing tests with TestRestTemplate."
         url = "https://github.com/mavarazo/assertrest"
 
+        developers {
+            developer {
+                id = "mavarazo"
+                name = "Marco Niederberger"
+                email = "marco.niederberger@gmail.com"
+                url = "https://mavarazo.github.io/"
+            }
+        }
+
+        licenses {
+            license {
+                name = "Apache License"
+                url = "https://github.com/mavarazo/assertrest/blob/main/LICENSE"
+            }
+        }
+
         scm {
             url = "https://github.com/mavarazo/assertrest"
             connection = "scm:git:https://github.com/mavarazo/assertrest.git"
