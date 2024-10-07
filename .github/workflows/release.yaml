@@ -28,5 +28,5 @@ jobs:
         run: ./gradlew publishMavenPublicationToMavenCentralRepository
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_TOKEN }}
