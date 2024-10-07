@@ -1,13 +1,13 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
-import java.net.URI
 
 plugins {
     jacoco
     `java-library`
-    `maven-publish`
     id("org.springframework.boot") version "3.2.0"
     id("org.sonarqube") version "4.4.1.3373"
     id("pl.allegro.tech.build.axion-release") version "1.18.9"
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
 scmVersion {
@@ -53,23 +53,26 @@ sonar {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
+mavenPublishing {
+    coordinates(
+        groupId = group as String,
+        artifactId = name,
+        version = version as String
+    )
+
+    pom {
+        name = "assertrest"
+        description = "Library to improve test code readability when writing tests with TestRestTemplate."
+        url = "https://github.com/mavarazo/assertrest"
+
+        scm {
+            url = "https://github.com/mavarazo/assertrest"
+            connection = "scm:git:https://github.com/mavarazo/assertrest.git"
+            developerConnection = "scm:git:git@github.com:mavarazo/assertrest.git"
         }
     }
 
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = URI("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_TOKEN")
-            }
-        }
-    }
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 }
 
 dependencies {
